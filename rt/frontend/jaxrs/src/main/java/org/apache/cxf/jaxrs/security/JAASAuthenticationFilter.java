@@ -101,6 +101,10 @@ public class JAASAuthenticationFilter implements ContainerRequestFilter {
         this.realmName = name;
     }
     
+    public void setUseDoAs(boolean useDoAs) {
+        interceptor.setUseDoAs(useDoAs);
+    }
+    
     protected CallbackHandler getCallbackHandler(String name, String password) {
         return new NamePasswordCallbackHandler(name, password);
     }

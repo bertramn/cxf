@@ -51,6 +51,7 @@ public class JAASLoginInterceptor extends AbstractPhaseInterceptor<Message> {
     private String roleClassifierType = ROLE_CLASSIFIER_PREFIX;
     private boolean reportFault;
     private boolean useDoAs = true;
+    private boolean suppressChainProcessing;
     
     
     public JAASLoginInterceptor() {
@@ -102,6 +103,10 @@ public class JAASLoginInterceptor extends AbstractPhaseInterceptor<Message> {
         this.useDoAs = useDoAs;
     }
 
+    public void setSuppressChainProcessing(boolean suppressChainProcessing) {
+        this.suppressChainProcessing = suppressChainProcessing;
+    }
+
     public void handleMessage(final Message message) throws Fault {
 
         String name = null;
@@ -142,7 +147,7 @@ public class JAASLoginInterceptor extends AbstractPhaseInterceptor<Message> {
                     @Override
                     public Void run() {
                         InterceptorChain chain = message.getInterceptorChain();
-                        if (chain != null) {
+                        if (chain != null && !JAASLoginInterceptor.this.suppressChainProcessing) {
                             chain.doIntercept(message);
                         }
                         return null;

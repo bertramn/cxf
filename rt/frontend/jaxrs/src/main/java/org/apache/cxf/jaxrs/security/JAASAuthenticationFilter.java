@@ -103,6 +103,7 @@ public class JAASAuthenticationFilter implements ContainerRequestFilter {
     
     public void setUseDoAs(boolean useDoAs) {
         interceptor.setUseDoAs(useDoAs);
+        interceptor.setSuppressChainProcessing(useDoAs);
     }
     
     protected CallbackHandler getCallbackHandler(String name, String password) {
